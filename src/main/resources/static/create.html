@@ -3,26 +3,746 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create New - InvestmentGiftCard</title>
+    <title>Create Gift Card - InvestmentGiftCard</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/form.css">
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <h1>Create New</h1>
-            <p class="subtitle">Create a new investment gift card</p>
-            <form id="createForm">
-                <!-- Form fields will be added here -->
-                <div class="form-group">
-                    <label for="cardName">Card Name</label>
-                    <input type="text" id="cardName" name="cardName" placeholder="Enter card name" required>
+    <div class="form-container">
+        <div class="form-card">
+            <div class="form-header">
+                <h1>Investment Gift Card Application</h1>
+                <p>Complete all sections to create a new gift card</p>
+            </div>
+
+            <!-- Progress Steps -->
+            <div class="progress-container">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <span class="step-label">Buyer Info</span>
                 </div>
-                <div class="button-group">
-                    <button type="submit" class="btn">Create</button>
-                    <button type="button" class="btn btn-secondary" onclick="location.href='/dashboard.html'">Back</button>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-circle">2</div>
+                    <span class="step-label">Beneficiary</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-circle">3</div>
+                    <span class="step-label">Voucher</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-circle">4</div>
+                    <span class="step-label">Payment</span>
+                </div>
+            </div>
+
+            <form id="giftCardForm">
+                <!-- Section A: Buyer Information -->
+                <div class="form-section active" id="section-1">
+                    <div class="section-header">
+                        <h2>Section A: Buyer Information</h2>
+                        <p>Please provide the buyer's details</p>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="buyerFullName">Full Name <span class="required">*</span></label>
+                            <input type="text" id="buyerFullName" name="buyerFullName" placeholder="Enter full name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="buyerIdPassport">ID / Passport Number <span class="required">*</span></label>
+                            <input type="text" id="buyerIdPassport" name="buyerIdPassport" placeholder="Enter ID or Passport number" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="buyerMobile">Mobile Number <span class="required">*</span></label>
+                            <input type="tel" id="buyerMobile" name="buyerMobile" placeholder="+264 XX XXX XXXX" required>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="buyerAddress">Residential Address <span class="required">*</span></label>
+                            <textarea id="buyerAddress" name="buyerAddress" rows="3" placeholder="Enter full residential address" required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section B: Beneficiary Information -->
+                <div class="form-section" id="section-2">
+                    <div class="section-header">
+                        <h2>Section B: Beneficiary Information</h2>
+                        <p>Details of the gift card recipient</p>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="beneficiaryFullName">Beneficiary Full Name <span class="required">*</span></label>
+                            <input type="text" id="beneficiaryFullName" name="beneficiaryFullName" placeholder="Enter beneficiary's full name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="beneficiaryDob">Date of Birth <span class="required">*</span></label>
+                            <input type="date" id="beneficiaryDob" name="beneficiaryDob" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="beneficiaryMobile">Mobile Number <span class="required">*</span></label>
+                            <input type="tel" id="beneficiaryMobile" name="beneficiaryMobile" placeholder="+264 XX XXX XXXX" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="relationship">Relationship to Buyer <span class="required">*</span></label>
+                            <select id="relationship" name="relationship" required>
+                                <option value="">Select relationship</option>
+                                <option value="parent">Parent</option>
+                                <option value="child">Child</option>
+                                <option value="spouse">Spouse</option>
+                                <option value="sibling">Sibling</option>
+                                <option value="friend">Friend</option>
+                                <option value="colleague">Colleague</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactMethod">Preferred Contact Method <span class="required">*</span></label>
+                            <select id="contactMethod" name="contactMethod" required>
+                                <option value="">Select contact method</option>
+                                <option value="sms">SMS</option>
+                                <option value="call">Call</option>
+                                <option value="email">Email</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section C: Voucher Details -->
+                <div class="form-section" id="section-3">
+                    <div class="section-header">
+                        <h2>Section C: Voucher Details</h2>
+                        <p>Configure the gift card voucher</p>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="totalValue">Total Value (N$) <span class="required">*</span></label>
+                            <input type="number" id="totalValue" name="totalValue" placeholder="0.00" min="0" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="batchNumber">Unique Batch/Card Number <span class="required">*</span></label>
+                            <div class="input-with-button">
+                                <input type="text" id="batchNumber" name="batchNumber" placeholder="Auto-generated or enter manually" required>
+                                <button type="button" class="btn-generate" onclick="generateBatchNumber()">Generate</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="expiryDate">Expiry Date <span class="required">*</span></label>
+                            <input type="date" id="expiryDate" name="expiryDate" required>
+                            <span class="help-text">The voucher must be redeemed on or before this date</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section D: Issuance and Payment -->
+                <div class="form-section" id="section-4">
+                    <div class="section-header">
+                        <h2>Section D: Issuance and Payment</h2>
+                        <p>Select your payment method</p>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label>Payment Method <span class="required">*</span></label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="paymentMethod" value="cash_deposit" required>
+                                    <span class="radio-label">
+                                        <span class="radio-title">Cash Deposit</span>
+                                        <span class="radio-desc">Onboarding required</span>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="paymentMethod" value="account_debit">
+                                    <span class="radio-label">
+                                        <span class="radio-title">Account Debit (FNB)</span>
+                                        <span class="radio-desc">Direct debit from your FNB account</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group bank-details" id="bankDetails" style="display: none;">
+                            <label for="fnbAccountNumber">FNB Account Number <span class="required">*</span></label>
+                            <input type="text" id="fnbAccountNumber" name="fnbAccountNumber" placeholder="Enter your FNB account number">
+                        </div>
+                        
+                        <div class="form-group bank-details" id="branchDetails" style="display: none;">
+                            <label for="branch">Branch <span class="required">*</span></label>
+                            <input type="text" id="branch" name="branch" placeholder="Enter branch name">
+                        </div>
+                    </div>
+
+                    <!-- Summary -->
+                    <div class="summary-box">
+                        <h3>Application Summary</h3>
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <span class="summary-label">Buyer:</span>
+                                <span class="summary-value" id="summaryBuyer">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Beneficiary:</span>
+                                <span class="summary-value" id="summaryBeneficiary">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Value:</span>
+                                <span class="summary-value" id="summaryValue">N$ 0.00</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Expires:</span>
+                                <span class="summary-value" id="summaryExpiry">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="form-navigation">
+                    <button type="button" class="btn btn-secondary" id="prevBtn" onclick="changeSection(-1)" style="display: none;">
+                        Previous
+                    </button>
+                    <button type="button" class="btn" id="nextBtn" onclick="changeSection(1)">
+                        Next
+                    </button>
+                    <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">
+                        Submit Application
+                    </button>
                 </div>
             </form>
+
+            <div class="form-footer">
+                <a href="/dashboard.html" class="back-link">← Back to Dashboard</a>
+            </div>
         </div>
     </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-content">
+            <div class="modal-tick">
+                <svg viewBox="0 0 52 52">
+                    <circle class="tick-circle" cx="26" cy="26" r="25" fill="none"/>
+                    <path class="tick-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                </svg>
+            </div>
+            <h2 class="modal-title">Application Submitted!</h2>
+            <p class="modal-message">Your gift card has been generated successfully.</p>
+
+            <!-- Gift Card Visual -->
+            <div class="gift-card" id="giftCard">
+                <div class="gc-bg-pattern"></div>
+                <div class="gc-header">
+                    <div class="gc-logo">FNB</div>
+                    <div class="gc-type">INVESTMENT GIFT CARD</div>
+                </div>
+                <div class="gc-chip">
+                    <svg width="40" height="30" viewBox="0 0 40 30">
+                        <rect x="1" y="1" width="38" height="28" rx="4" fill="#c9a84c" stroke="#b8963f" stroke-width="1"/>
+                        <line x1="1" y1="10" x2="39" y2="10" stroke="#b8963f" stroke-width="0.5"/>
+                        <line x1="1" y1="20" x2="39" y2="20" stroke="#b8963f" stroke-width="0.5"/>
+                        <line x1="14" y1="1" x2="14" y2="30" stroke="#b8963f" stroke-width="0.5"/>
+                        <line x1="26" y1="1" x2="26" y2="30" stroke="#b8963f" stroke-width="0.5"/>
+                    </svg>
+                </div>
+                <div class="gc-number" id="gcNumber">**** **** **** 0000</div>
+                <div class="gc-details">
+                    <div class="gc-detail-group">
+                        <span class="gc-detail-label">CARD HOLDER</span>
+                        <span class="gc-detail-value" id="gcHolder">-</span>
+                    </div>
+                    <div class="gc-detail-group">
+                        <span class="gc-detail-label">VALID THRU</span>
+                        <span class="gc-detail-value" id="gcExpiry">--/--</span>
+                    </div>
+                </div>
+                <div class="gc-footer">
+                    <div class="gc-amount" id="gcAmount">N$ 0.00</div>
+                    <div class="gc-ref" id="gcRef">REF-0000</div>
+                </div>
+            </div>
+
+            <button class="modal-btn" onclick="window.location.href='/dashboard.html'">Back to Dashboard</button>
+        </div>
+    </div>
+
+    <style>
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 20px;
+            padding: 50px 44px;
+            text-align: center;
+            max-width: 520px;
+            width: 92%;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
+            animation: modalIn 0.4s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalIn {
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-tick {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 28px;
+        }
+
+        .modal-tick svg {
+            width: 90px;
+            height: 90px;
+        }
+
+        .tick-circle {
+            stroke: #1d7a34;
+            stroke-width: 2;
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            animation: tickCircle 0.6s ease-in-out forwards;
+        }
+
+        .tick-check {
+            stroke: #1d7a34;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: tickCheck 0.4s 0.4s ease-in-out forwards;
+        }
+
+        @keyframes tickCircle {
+            to { stroke-dashoffset: 0; }
+        }
+
+        @keyframes tickCheck {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .modal-title {
+            font-size: 26px;
+            color: #111;
+            margin-bottom: 12px;
+        }
+
+        .modal-message {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Gift Card Styles */
+        .gift-card {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            aspect-ratio: 1.586;
+            border-radius: 16px;
+            margin: 24px auto 28px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            animation: cardSlideIn 0.6s 0.5s ease both;
+        }
+
+        @keyframes cardSlideIn {
+            from { transform: translateY(30px) scale(0.9); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        /* Card tiers */
+        .gift-card.tier-black {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 40%, #1a1a1a 100%);
+            color: #fff;
+        }
+
+        .gift-card.tier-green {
+            background: linear-gradient(135deg, #0d5a2a 0%, #1a8a45 40%, #0d5a2a 100%);
+            color: #fff;
+        }
+
+        .gift-card.tier-yellow {
+            background: linear-gradient(135deg, #b8860b 0%, #daa520 40%, #b8860b 100%);
+            color: #fff;
+        }
+
+
+
+        .gc-bg-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.06;
+            background-image:
+                radial-gradient(circle at 20% 80%, white 1px, transparent 1px),
+                radial-gradient(circle at 80% 20%, white 1px, transparent 1px),
+                radial-gradient(circle at 50% 50%, white 1px, transparent 1px);
+            background-size: 60px 60px, 80px 80px, 40px 40px;
+            pointer-events: none;
+        }
+
+        .gc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gc-logo {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            opacity: 0.9;
+        }
+
+        .gc-type {
+            font-size: 9px;
+            letter-spacing: 2px;
+            opacity: 0.7;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .gc-chip {
+            position: relative;
+            z-index: 1;
+            margin: 8px 0;
+        }
+
+        .gc-number {
+            font-size: 19px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            font-family: 'Courier New', monospace;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gc-details {
+            display: flex;
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gc-detail-group {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .gc-detail-label {
+            font-size: 8px;
+            letter-spacing: 1.5px;
+            opacity: 0.6;
+            margin-bottom: 2px;
+        }
+
+        .gc-detail-value {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .gc-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gc-amount {
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .gc-ref {
+            font-size: 10px;
+            opacity: 0.6;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 480px) {
+            .gift-card {
+                padding: 20px;
+            }
+            .gc-number {
+                font-size: 15px;
+                letter-spacing: 2px;
+            }
+            .gc-amount {
+                font-size: 20px;
+            }
+        }
+
+        .modal-btn {
+            padding: 14px 36px;
+            background: #111;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-btn:hover {
+            background: #333;
+        }
+    </style>
+
+    <script>
+        let currentSection = 1;
+        const totalSections = 4;
+
+        function changeSection(direction) {
+            const current = document.getElementById(`section-${currentSection}`);
+            
+            if (direction === 1 && !validateSection(currentSection)) {
+                return;
+            }
+            
+            current.classList.remove('active');
+            currentSection += direction;
+            
+            const next = document.getElementById(`section-${currentSection}`);
+            next.classList.add('active');
+            
+            updateProgress();
+            updateButtons();
+            updateSummary();
+        }
+
+        function validateSection(section) {
+            const sectionEl = document.getElementById(`section-${section}`);
+            const inputs = sectionEl.querySelectorAll('input[required], select[required], textarea[required]');
+            let valid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value) {
+                    input.classList.add('error');
+                    valid = false;
+                } else {
+                    input.classList.remove('error');
+                }
+            });
+            
+            if (!valid) {
+                alert('Please fill in all required fields.');
+            }
+            
+            return valid;
+        }
+
+        function updateProgress() {
+            document.querySelectorAll('.progress-step').forEach((step, index) => {
+                if (index + 1 <= currentSection) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            prevBtn.style.display = currentSection === 1 ? 'none' : 'inline-block';
+            nextBtn.style.display = currentSection === totalSections ? 'none' : 'inline-block';
+            submitBtn.style.display = currentSection === totalSections ? 'inline-block' : 'none';
+        }
+
+        function updateSummary() {
+            document.getElementById('summaryBuyer').textContent = 
+                document.getElementById('buyerFullName').value || '-';
+            document.getElementById('summaryBeneficiary').textContent = 
+                document.getElementById('beneficiaryFullName').value || '-';
+            
+            const value = document.getElementById('totalValue').value;
+            document.getElementById('summaryValue').textContent = 
+                value ? `N$ ${parseFloat(value).toFixed(2)}` : 'N$ 0.00';
+            
+            const expiry = document.getElementById('expiryDate').value;
+            document.getElementById('summaryExpiry').textContent = 
+                expiry ? new Date(expiry).toLocaleDateString() : '-';
+        }
+
+        function generateBatchNumber() {
+            const prefix = 'IGC';
+            const timestamp = Date.now().toString(36).toUpperCase();
+            const random = Math.random().toString(36).substring(2, 6).toUpperCase();
+            document.getElementById('batchNumber').value = `${prefix}-${timestamp}-${random}`;
+        }
+
+        // Payment method toggle
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const bankDetails = document.getElementById('bankDetails');
+                const branchDetails = document.getElementById('branchDetails');
+                
+                if (this.value === 'account_debit') {
+                    bankDetails.style.display = 'block';
+                    branchDetails.style.display = 'block';
+                    document.getElementById('fnbAccountNumber').required = true;
+                    document.getElementById('branch').required = true;
+                } else {
+                    bankDetails.style.display = 'none';
+                    branchDetails.style.display = 'none';
+                    document.getElementById('fnbAccountNumber').required = false;
+                    document.getElementById('branch').required = false;
+                }
+            });
+        });
+
+        // Get auth token
+        function getAuthHeaders() {
+            const token = localStorage.getItem('accessToken');
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': token ? `Bearer ${token}` : ''
+            };
+        }
+
+        // Form submission
+        document.getElementById('giftCardForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!validateSection(currentSection)) {
+                return;
+            }
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            // Build API request body
+            const requestBody = {
+                buyerFullName: data.buyerFullName,
+                buyerIdPassport: data.buyerIdPassport,
+                buyerMobile: data.buyerMobile,
+                buyerAddress: data.buyerAddress,
+                beneficiaryFullName: data.beneficiaryFullName,
+                beneficiaryDob: data.beneficiaryDob,
+                beneficiaryMobile: data.beneficiaryMobile,
+                relationship: data.relationship,
+                contactMethod: data.contactMethod,
+                totalValue: parseFloat(data.totalValue),
+                batchNumber: data.batchNumber,
+                expiryDate: data.expiryDate,
+                paymentMethod: data.paymentMethod,
+                fnbAccountNumber: data.fnbAccountNumber || null,
+                branch: data.branch || null
+            };
+
+            // Show loading state
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            try {
+                const response = await fetch('/api/v1/gift-cards', {
+                    method: 'POST',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify(requestBody)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        window.location.href = '/login.html';
+                        return;
+                    }
+                    throw new Error(result.message || 'Failed to create gift card');
+                }
+
+                const giftCardData = result.data;
+                const amount = parseFloat(giftCardData.totalValue) || 0;
+                const giftCard = document.getElementById('giftCard');
+
+                // Set tier color based on amount
+                giftCard.classList.remove('tier-black', 'tier-green', 'tier-yellow');
+                if (amount >= 10000) {
+                    giftCard.classList.add('tier-black');
+                } else if (amount >= 5000) {
+                    giftCard.classList.add('tier-green');
+                } else {
+                    giftCard.classList.add('tier-yellow');
+                }
+
+                // Card number from batch number
+                const batch = giftCardData.batchNumber || '0000';
+                const last4 = batch.replace(/[^0-9A-Z]/gi, '').slice(-4) || '0000';
+                document.getElementById('gcNumber').textContent = '**** **** **** ' + last4;
+
+                // Card holder (beneficiary name)
+                document.getElementById('gcHolder').textContent = giftCardData.beneficiaryFullName || '-';
+
+                // Expiry
+                if (giftCardData.expiryDate) {
+                    const exp = new Date(giftCardData.expiryDate);
+                    const mm = String(exp.getMonth() + 1).padStart(2, '0');
+                    const yy = String(exp.getFullYear()).slice(-2);
+                    document.getElementById('gcExpiry').textContent = mm + '/' + yy;
+                }
+
+                // Amount and ref
+                document.getElementById('gcAmount').textContent = 'N$ ' + amount.toLocaleString('en', {minimumFractionDigits: 2});
+                document.getElementById('gcRef').textContent = giftCardData.referenceNumber;
+
+                // Show success modal
+                document.getElementById('successModal').classList.add('show');
+
+            } catch (error) {
+                console.error('Error creating gift card:', error);
+                alert(error.message || 'Failed to create gift card. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Application';
+            }
+        });
+
+        // Set minimum expiry date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('expiryDate').setAttribute('min', today);
+    </script>
 </body>
 </html>
