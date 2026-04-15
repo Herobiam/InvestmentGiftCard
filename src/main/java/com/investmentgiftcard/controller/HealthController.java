@@ -15,12 +15,4 @@ public class HealthController {
             "application", "InvestmentGiftCard"
         );
     }
-
-    @GetMapping("/")
-    public Map<String, String> welcome() {
-        return Map.of(
-            "message", "Welcome to InvestmentGiftCard API",
-            "version", "1.0.0"
-        );
-    }
 }
