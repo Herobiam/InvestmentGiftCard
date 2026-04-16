@@ -11,19 +11,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * Data initializer for development environment.
- * Seeds the database with test data on startup.
+ * Data initializer that seeds the database with initial data on startup.
+ * Works for both H2 (dev) and PostgreSQL (production) databases.
+ * Only inserts data if it doesn't already exist.
  */
 @Slf4j
 @Configuration
-@Profile("dev")
 @RequiredArgsConstructor
 public class DataInitializer {
 
@@ -32,7 +31,7 @@ public class DataInitializer {
     @Bean
     CommandLineRunner initDatabase(UserRepository userRepository, RoleRepository roleRepository, GiftCardRepository giftCardRepository) {
         return args -> {
-            log.info("Initializing development data...");
+            log.info("=== Database Initialization Started ===");
 
             // Create default roles
             Role userRole = roleRepository.findByName("USER")
@@ -158,7 +157,7 @@ public class DataInitializer {
                 log.info("Created 3 sample gift cards for testing");
             }
 
-            log.info("Development data initialization complete.");
+            log.info("=== Database Initialization Complete ===");
         };
     }
 }

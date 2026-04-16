@@ -85,6 +85,7 @@
                         <div class="form-group">
                             <label for="beneficiaryDob">Date of Birth <span class="required">*</span></label>
                             <input type="date" id="beneficiaryDob" name="beneficiaryDob" required>
+                            <span class="help-text">Beneficiary must be born before today</span>
                         </div>
                         
                         <div class="form-group">
@@ -128,7 +129,8 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="totalValue">Total Value (N$) <span class="required">*</span></label>
-                            <input type="number" id="totalValue" name="totalValue" placeholder="0.00" min="0" step="0.01" required>
+                            <input type="number" id="totalValue" name="totalValue" placeholder="Minimum N$ 500" min="500" step="0.01" required>
+                            <span class="help-text">Minimum amount is N$ 500</span>
                         </div>
                         
                         <div class="form-group">
@@ -140,9 +142,19 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="expiryDate">Expiry Date <span class="required">*</span></label>
-                            <input type="date" id="expiryDate" name="expiryDate" required>
-                            <span class="help-text">The voucher must be redeemed on or before this date</span>
+                            <label for="expiryDate">Redemption Date</label>
+                            <input type="date" id="expiryDate" name="expiryDate" readonly style="background-color: #f5f5f5; cursor: not-allowed;">
+                            <span class="help-text">Auto-calculated: 18 business days from today</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="kycVerified">KYC Verified <span class="required">*</span></label>
+                            <select id="kycVerified" name="kycVerified" required>
+                                <option value="">Select KYC status</option>
+                                <option value="no">No - Pending KYC</option>
+                                <option value="yes">Yes - KYC Completed</option>
+                            </select>
+                            <span class="help-text">If Yes, card will be issued immediately</span>
                         </div>
                     </div>
                 </div>
@@ -325,7 +337,7 @@
         }
 
         .tick-circle {
-            stroke: #1d7a34;
+            stroke: #007c7f;
             stroke-width: 2;
             stroke-dasharray: 166;
             stroke-dashoffset: 166;
@@ -333,7 +345,7 @@
         }
 
         .tick-check {
-            stroke: #1d7a34;
+            stroke: #007c7f;
             stroke-width: 3;
             stroke-linecap: round;
             stroke-linejoin: round;
@@ -513,10 +525,10 @@
 
         .modal-btn {
             padding: 14px 36px;
-            background: #111;
+            background: #007c7f;
             color: #fff;
             border: none;
-            border-radius: 12px;
+            border-radius: 20px;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
@@ -524,7 +536,7 @@
         }
 
         .modal-btn:hover {
-            background: #333;
+            background: #006466;
         }
     </style>
 
@@ -669,7 +681,8 @@
                 expiryDate: data.expiryDate,
                 paymentMethod: data.paymentMethod,
                 fnbAccountNumber: data.fnbAccountNumber || null,
-                branch: data.branch || null
+                branch: data.branch || null,
+                kycVerified: data.kycVerified === 'yes'
             };
 
             // Show loading state
@@ -742,7 +755,38 @@
 
         // Set minimum expiry date to today
         const today = new Date().toISOString().split('T')[0];
-        document.getElementById('expiryDate').setAttribute('min', today);
+        
+        // Set max date for DOB (cannot be in the future)
+        document.getElementById('beneficiaryDob').setAttribute('max', today);
+        
+        // Calculate 18 business days from today for expiry
+        function addBusinessDays(startDate, days) {
+            let count = 0;
+            let currentDate = new Date(startDate);
+            while (count < days) {
+                currentDate.setDate(currentDate.getDate() + 1);
+                const dayOfWeek = currentDate.getDay();
+                if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Skip weekends
+                    count++;
+                }
+            }
+            return currentDate;
+        }
+        
+        const expiryDate = addBusinessDays(new Date(), 18);
+        document.getElementById('expiryDate').value = expiryDate.toISOString().split('T')[0];
+        
+        // Validate minimum voucher amount
+        document.getElementById('totalValue').addEventListener('blur', function() {
+            const value = parseFloat(this.value);
+            if (value && value < 500) {
+                this.classList.add('error');
+                alert('Minimum voucher amount is N$ 500');
+                this.value = '';
+            } else {
+                this.classList.remove('error');
+            }
+        });
     </script>
 </body>
 </html>

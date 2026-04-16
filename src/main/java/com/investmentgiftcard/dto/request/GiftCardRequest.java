@@ -55,7 +55,7 @@ public class GiftCardRequest {
 
     // Section C: Voucher Details
     @NotNull(message = "Total value is required")
-    @DecimalMin(value = "0.01", message = "Total value must be greater than 0")
+    @DecimalMin(value = "500.00", message = "Total value must be at least N$ 500")
     private BigDecimal totalValue;
 
     @NotBlank(message = "Batch number is required")
@@ -73,4 +73,7 @@ public class GiftCardRequest {
     private String fnbAccountNumber;
 
     private String branch;
+    
+    // KYC Status
+    private Boolean kycVerified = false;
 }

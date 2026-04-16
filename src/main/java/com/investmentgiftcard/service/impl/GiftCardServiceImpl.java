@@ -78,7 +78,7 @@ public class GiftCardServiceImpl implements GiftCardService {
                 .paymentMethod(request.getPaymentMethod())
                 .fnbAccountNumber(request.getFnbAccountNumber())
                 .branch(request.getBranch())
-                .status(GiftCardStatus.PENDING_KYC)
+                .status(Boolean.TRUE.equals(request.getKycVerified()) ? GiftCardStatus.CARD_ISSUED : GiftCardStatus.PENDING_KYC)
                 .createdByUser(currentUser)
                 .build();
 
@@ -232,6 +232,12 @@ public class GiftCardServiceImpl implements GiftCardService {
         
         Redemption savedRedemption = redemptionRepository.save(redemption);
         log.info("Redemption initiated with ID: {}", savedRedemption.getId());
+        
+        // Update gift card status to REDEEMED
+        giftCard.setStatus(GiftCardStatus.REDEEMED);
+        giftCard.setUpdatedBy(currentUser != null ? currentUser.getEmail() : "system");
+        giftCardRepository.save(giftCard);
+        log.info("Gift card {} status updated to REDEEMED", giftCard.getId());
         
         return RedemptionResponse.fromEntity(savedRedemption);
     }

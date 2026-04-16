@@ -63,8 +63,13 @@
     transition: all 0.3s ease;
 }
 
+.progress-step.completed .step-circle {
+    background: #007c7f;
+    color: #fff;
+}
+
 .progress-step.active .step-circle {
-    background: #000;
+    background: #007c7f;
     color: #fff;
 }
 
@@ -76,7 +81,7 @@
 }
 
 .progress-step.active .step-label {
-    color: #000;
+    color: #007c7f;
     font-weight: 500;
 }
 
@@ -162,7 +167,7 @@
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #000;
+    border-color: #007c7f;
 }
 
 .form-group input.error,
@@ -225,7 +230,7 @@
 }
 
 .radio-option:hover {
-    border-color: #000;
+    border-color: #007c7f;
 }
 
 .radio-option input[type="radio"] {
@@ -234,10 +239,11 @@
     width: 18px;
     height: 18px;
     cursor: pointer;
+    accent-color: #007c7f;
 }
 
 .radio-option input[type="radio"]:checked + .radio-label .radio-title {
-    color: #000;
+    color: #007c7f;
 }
 
 .radio-label {
@@ -302,11 +308,11 @@
 }
 
 .btn-success {
-    background: #16a34a;
+    background: #007c7f;
 }
 
 .btn-success:hover {
-    background: #15803d;
+    background: #006466;
 }
 
 /* Form Footer */
@@ -325,7 +331,7 @@
 }
 
 .back-link:hover {
-    color: #000;
+    color: #007c7f;
 }
 
 /* Responsive */
