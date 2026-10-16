@@ -47,6 +47,10 @@ public class GiftCardRequest {
     @Pattern(regexp = "^\\+?[0-9\\s\\-()]{10,20}$", message = "Invalid mobile number format")
     private String beneficiaryMobile;
 
+    @Email(message = "Invalid email format")
+    @Size(max = 100, message = "Email must not exceed 100 characters")
+    private String beneficiaryEmail;
+
     @NotBlank(message = "Relationship to buyer is required")
     private String relationship;
 

@@ -34,6 +34,7 @@ public class GiftCardResponse {
     private String beneficiaryFullName;
     private LocalDate beneficiaryDob;
     private String beneficiaryMobile;
+    private String beneficiaryEmail;
     private String relationship;
     private String contactMethod;
 
@@ -74,6 +75,7 @@ public class GiftCardResponse {
                 .beneficiaryFullName(giftCard.getBeneficiaryFullName())
                 .beneficiaryDob(giftCard.getBeneficiaryDob())
                 .beneficiaryMobile(giftCard.getBeneficiaryMobile())
+                .beneficiaryEmail(giftCard.getBeneficiaryEmail())
                 .relationship(giftCard.getRelationship())
                 .contactMethod(giftCard.getContactMethod())
                 .totalValue(giftCard.getTotalValue())

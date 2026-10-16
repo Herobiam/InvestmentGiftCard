@@ -350,6 +350,138 @@
                 min-width: 100%;
             }
         }
+
+        /* Gift Card Visual Styles */
+        .gift-card-visual {
+            margin: 0 0 25px 0;
+            border-radius: 16px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            aspect-ratio: 1.6 / 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .gift-card-visual.card-platinum {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 30%, #1a1a1a 50%, #3d3d3d 70%, #1a1a1a 100%);
+        }
+
+        .gift-card-visual.card-classic {
+            background: linear-gradient(135deg, #007c7f 0%, #00a3a6 30%, #007c7f 50%, #009999 70%, #005a5c 100%);
+        }
+
+        .gift-card-visual.card-gold {
+            background: linear-gradient(135deg, #b8860b 0%, #daa520 30%, #b8860b 50%, #ffd700 70%, #b8860b 100%);
+        }
+
+        .gift-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .gift-card-brand {
+            color: rgba(255,255,255,0.9);
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .gift-card-brand span {
+            display: block;
+            font-size: 10px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .gift-card-tier {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .gift-card-value-section {
+            margin: 15px 0;
+        }
+
+        .gift-card-value-label {
+            color: rgba(255,255,255,0.7);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .gift-card-value {
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .gift-card-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .gift-card-detail-item {
+            text-align: left;
+        }
+
+        .gift-card-detail-item.right {
+            text-align: right;
+        }
+
+        .gift-card-detail-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .gift-card-detail-value {
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .gift-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 10px;
+        }
+
+        .gift-card-beneficiary-label {
+            color: rgba(255,255,255,0.5);
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .gift-card-beneficiary-name {
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .gift-card-country {
+            color: rgba(255,255,255,0.5);
+            font-size: 9px;
+        }
     </style>
 </head>
 <body>
@@ -375,16 +507,16 @@
                 <p>Issue a new investment gift card</p>
             </a>
             
-            <a href="/search.html" class="action-card">
-                <div class="icon">
+            <div class="action-card disabled" onclick="return false;" style="cursor: not-allowed; opacity: 0.5;">
+                <div class="icon" style="background: #999;">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <circle cx="11" cy="11" r="7" stroke="white" stroke-width="2" fill="none"/>
                         <path d="M16 16L21 21" stroke="white" stroke-width="2" stroke-linecap="round"/>
                     </svg>
                 </div>
                 <h2>Search</h2>
-                <p>Find existing gift cards</p>
-            </a>
+                <p>Coming soon</p>
+            </div>
         </div>
 
         <section class="recent-applications">
@@ -430,6 +562,38 @@
             <!-- View Mode -->
             <div id="viewMode">
                 <h2 class="modal-title">Gift Card Details</h2>
+                
+                <!-- Visual Gift Card -->
+                <div class="gift-card-visual card-classic" id="giftCardVisual">
+                    <div class="gift-card-header">
+                        <div class="gift-card-brand">
+                            FNB
+                            <span>Investment Gift Card</span>
+                        </div>
+                        <span class="gift-card-tier" id="cardTier">CLASSIC</span>
+                    </div>
+                    <div class="gift-card-value-section">
+                        <div class="gift-card-value-label">Gift Card Value</div>
+                        <div class="gift-card-value" id="cardVisualValue">N$ 0.00</div>
+                    </div>
+                    <div class="gift-card-details">
+                        <div class="gift-card-detail-item">
+                            <div class="gift-card-detail-label">Reference No.</div>
+                            <div class="gift-card-detail-value" id="cardVisualRef">-</div>
+                        </div>
+                        <div class="gift-card-detail-item right">
+                            <div class="gift-card-detail-label">Valid Until</div>
+                            <div class="gift-card-detail-value" id="cardVisualExpiry">-</div>
+                        </div>
+                    </div>
+                    <div class="gift-card-footer">
+                        <div>
+                            <div class="gift-card-beneficiary-label">Beneficiary</div>
+                            <div class="gift-card-beneficiary-name" id="cardVisualBeneficiary">-</div>
+                        </div>
+                        <div class="gift-card-country">NAMIBIA</div>
+                    </div>
+                </div>
                 
                 <div class="detail-grid">
                     <div class="detail-section">
@@ -1087,6 +1251,33 @@
                 document.getElementById('detailBeneficiaryName').textContent = currentGiftCard.beneficiaryFullName;
                 document.getElementById('detailBeneficiaryMobile').textContent = currentGiftCard.beneficiaryMobile;
                 document.getElementById('detailRelationship').textContent = currentGiftCard.relationship;
+
+                // Update visual gift card
+                const cardVisual = document.getElementById('giftCardVisual');
+                const value = parseFloat(currentGiftCard.totalValue);
+                const formattedValue = `N$ ${value.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+                
+                // Remove existing color classes
+                cardVisual.classList.remove('card-platinum', 'card-classic', 'card-gold');
+                
+                // Set color and tier based on value
+                let tier = 'CLASSIC';
+                if (value >= 10000) {
+                    cardVisual.classList.add('card-platinum');
+                    tier = 'PLATINUM';
+                } else if (value > 5000) {
+                    cardVisual.classList.add('card-classic');
+                    tier = 'CLASSIC';
+                } else {
+                    cardVisual.classList.add('card-gold');
+                    tier = 'GOLD';
+                }
+                
+                document.getElementById('cardTier').textContent = tier;
+                document.getElementById('cardVisualValue').textContent = formattedValue;
+                document.getElementById('cardVisualRef').textContent = currentGiftCard.referenceNumber;
+                document.getElementById('cardVisualExpiry').textContent = formatDate(currentGiftCard.expiryDate);
+                document.getElementById('cardVisualBeneficiary').textContent = currentGiftCard.beneficiaryFullName;
 
                 // Show/hide redeem button based on status
                 const redeemBtn = document.getElementById('redeemBtn');

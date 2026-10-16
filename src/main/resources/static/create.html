@@ -94,6 +94,12 @@
                         </div>
                         
                         <div class="form-group">
+                            <label for="beneficiaryEmail">Email Address</label>
+                            <input type="email" id="beneficiaryEmail" name="beneficiaryEmail" placeholder="beneficiary@example.com">
+                            <span class="help-text">Optional - Used to send gift card notification</span>
+                        </div>
+                        
+                        <div class="form-group">
                             <label for="relationship">Relationship to Buyer <span class="required">*</span></label>
                             <select id="relationship" name="relationship" required>
                                 <option value="">Select relationship</option>
@@ -674,6 +680,7 @@
                 beneficiaryFullName: data.beneficiaryFullName,
                 beneficiaryDob: data.beneficiaryDob,
                 beneficiaryMobile: data.beneficiaryMobile,
+                beneficiaryEmail: data.beneficiaryEmail || null,
                 relationship: data.relationship,
                 contactMethod: data.contactMethod,
                 totalValue: parseFloat(data.totalValue),

@@ -17,6 +17,7 @@ import com.investmentgiftcard.model.entity.User;
 import com.investmentgiftcard.repository.GiftCardRepository;
 import com.investmentgiftcard.repository.RedemptionRepository;
 import com.investmentgiftcard.repository.UserRepository;
+import com.investmentgiftcard.service.EmailService;
 import com.investmentgiftcard.service.GiftCardService;
 import com.investmentgiftcard.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,7 @@ public class GiftCardServiceImpl implements GiftCardService {
     private final GiftCardRepository giftCardRepository;
     private final RedemptionRepository redemptionRepository;
     private final UserRepository userRepository;
+    private final EmailService emailService;
 
     @Override
     public GiftCardResponse createGiftCard(GiftCardRequest request) {
@@ -71,6 +73,7 @@ public class GiftCardServiceImpl implements GiftCardService {
                 .beneficiaryFullName(request.getBeneficiaryFullName())
                 .beneficiaryDob(request.getBeneficiaryDob())
                 .beneficiaryMobile(request.getBeneficiaryMobile())
+                .beneficiaryEmail(request.getBeneficiaryEmail())
                 .relationship(request.getRelationship())
                 .contactMethod(request.getContactMethod())
                 .totalValue(request.getTotalValue())
@@ -86,6 +89,11 @@ public class GiftCardServiceImpl implements GiftCardService {
 
         GiftCard savedGiftCard = giftCardRepository.save(giftCard);
         log.info("Gift card created with reference: {}", referenceNumber);
+
+        // Send email notification to beneficiary if card is issued (KYC verified)
+        if (savedGiftCard.getStatus() == GiftCardStatus.CARD_ISSUED) {
+            emailService.sendGiftCardNotification(savedGiftCard);
+        }
 
         return GiftCardResponse.fromEntity(savedGiftCard);
     }
@@ -144,6 +152,7 @@ public class GiftCardServiceImpl implements GiftCardService {
     @Override
     public GiftCardResponse updateStatus(UUID id, String status) {
         GiftCard giftCard = findGiftCardById(id);
+        GiftCardStatus previousStatus = giftCard.getStatus();
         
         try {
             GiftCardStatus newStatus = GiftCardStatus.valueOf(status.toUpperCase());
@@ -152,6 +161,11 @@ public class GiftCardServiceImpl implements GiftCardService {
             
             GiftCard updatedGiftCard = giftCardRepository.save(giftCard);
             log.info("Gift card {} status updated to {}", id, status);
+            
+            // Send email notification if status changed to CARD_ISSUED (from PENDING_KYC)
+            if (newStatus == GiftCardStatus.CARD_ISSUED && previousStatus == GiftCardStatus.PENDING_KYC) {
+                emailService.sendGiftCardNotification(updatedGiftCard);
+            }
             
             return GiftCardResponse.fromEntity(updatedGiftCard);
         } catch (IllegalArgumentException e) {

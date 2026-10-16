@@ -51,6 +51,9 @@ public class GiftCard extends BaseEntity {
     @Column(name = "beneficiary_mobile", nullable = false, length = 20)
     private String beneficiaryMobile;
 
+    @Column(name = "beneficiary_email", length = 100)
+    private String beneficiaryEmail;
+
     @Column(name = "relationship", nullable = false, length = 50)
     private String relationship;
 
